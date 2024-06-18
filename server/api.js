@@ -4,6 +4,7 @@ const apiRouter = express.Router();
 const minionsRouter = require("./minions");
 const ideasRouter = require("./ideas");
 const meetingsRouter = require("./meetings");
+const workRouter = require("./work");
 
 apiRouter.use("/minions", minionsRouter);
 apiRouter.use("/ideas", ideasRouter);
