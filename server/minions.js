@@ -7,6 +7,7 @@ const {
   updateInstanceInDatabase,
   deleteFromDatabasebyId,
 } = require("./db");
+const validateId = require("./validateId"); // Add this line
 const workRouter = require("./work");
 
 // GET /api/minions to get an array of all minions
@@ -22,7 +23,7 @@ minionsRouter.post("/", (req, res) => {
 });
 
 // GET /api/minions/:minionId to get a single minion by id
-minionsRouter.get("/:minionId", (req, res, next) => {
+minionsRouter.get("/:minionId", validateId, (req, res, next) => {
   const minion = getFromDatabaseById("minions", req.params.minionId);
   if (minion) {
     res.send(minion);
@@ -32,13 +33,13 @@ minionsRouter.get("/:minionId", (req, res, next) => {
 });
 
 // PUT /api/minions/:minionId to update a single minion by id
-minionsRouter.put("/:minionId", (req, res) => {
+minionsRouter.put("/:minionId", validateId, (req, res) => {
   const updatedMinion = updateInstanceInDatabase("minions", req.body);
   res.send(updatedMinion);
 });
 
 // DELETE /api/minions/:minionId to delete a single minion by id
-minionsRouter.delete("/:minionId", (req, res) => {
+minionsRouter.delete("/:minionId", validateId, (req, res) => {
   const deleted = deleteFromDatabasebyId("minions", req.params.minionId);
   if (deleted) {
     res.status(204).send();
