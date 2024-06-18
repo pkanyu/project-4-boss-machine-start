@@ -1,4 +1,19 @@
-const checkMillionDollarIdea = () => {};
+function checkMillionDollarIdea(req, res, next) {
+  const { numWeeks, weeklyRevenue } = req.body;
 
-// Leave this exports assignment so that the function can be used elsewhere
+  if (!numWeeks || !weeklyRevenue || isNaN(numWeeks) || isNaN(weeklyRevenue)) {
+    return res.status(400).send("Invalid input");
+  }
+
+  const totalValue = Number(numWeeks) * Number(weeklyRevenue);
+
+  if (totalValue < 1000000) {
+    return res
+      .status(400)
+      .send("Idea is not worth at least one million dollars");
+  }
+
+  next();
+}
+
 module.exports = checkMillionDollarIdea;
